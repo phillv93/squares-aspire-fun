@@ -1,12 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "PmecpgHnRWk=",
+  "dgSpecHash": "lxqEzuSuD1E=",
   "success": true,
   "projectFilePath": "C:\\Users\\Verne\\source\\repos\\Squares\\Squares.AppHost\\Squares.AppHost.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Verne\\.nuget\\packages\\aspire.dashboard.sdk.win-x64\\9.1.0\\aspire.dashboard.sdk.win-x64.9.1.0.nupkg.sha512",
     "C:\\Users\\Verne\\.nuget\\packages\\aspire.hosting\\9.1.0\\aspire.hosting.9.1.0.nupkg.sha512",
     "C:\\Users\\Verne\\.nuget\\packages\\aspire.hosting.apphost\\9.1.0\\aspire.hosting.apphost.9.1.0.nupkg.sha512",
+    "C:\\Users\\Verne\\.nuget\\packages\\aspire.hosting.nodejs\\9.1.0\\aspire.hosting.nodejs.9.1.0.nupkg.sha512",
     "C:\\Users\\Verne\\.nuget\\packages\\aspire.hosting.orchestration.win-x64\\9.1.0\\aspire.hosting.orchestration.win-x64.9.1.0.nupkg.sha512",
     "C:\\Users\\Verne\\.nuget\\packages\\aspnetcore.healthchecks.uris\\9.0.0\\aspnetcore.healthchecks.uris.9.0.0.nupkg.sha512",
     "C:\\Users\\Verne\\.nuget\\packages\\fractions\\7.3.0\\fractions.7.3.0.nupkg.sha512",

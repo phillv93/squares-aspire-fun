@@ -2,9 +2,10 @@ var builder = DistributedApplication.CreateBuilder(args);
 
 var apiService = builder.AddProject<Projects.Squares_ApiService>("apiservice");
 
-builder.AddProject<Projects.Squares_Web>("webfrontend")
+_ = builder.AddNpmApp("squares-react", "../squares-react", "dev")
+    .WithEnvironment("PORT", "5173")
+    .WithHttpEndpoint(5174, 5173)
     .WithExternalHttpEndpoints()
-    .WithReference(apiService)
-    .WaitFor(apiService);
+    .WithReference(apiService);
 
 builder.Build().Run();

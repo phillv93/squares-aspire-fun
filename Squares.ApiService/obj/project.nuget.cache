@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "l0N7c/3gA6o=",
+  "dgSpecHash": "cG2WI7AWA+U=",
   "success": true,
   "projectFilePath": "C:\\Users\\Verne\\source\\repos\\Squares\\Squares.ApiService\\Squares.ApiService.csproj",
   "expectedPackageFiles": [
@@ -50,6 +50,7 @@
     "C:\\Users\\Verne\\.nuget\\packages\\polly.core\\8.4.2\\polly.core.8.4.2.nupkg.sha512",
     "C:\\Users\\Verne\\.nuget\\packages\\polly.extensions\\8.4.2\\polly.extensions.8.4.2.nupkg.sha512",
     "C:\\Users\\Verne\\.nuget\\packages\\polly.ratelimiting\\8.4.2\\polly.ratelimiting.8.4.2.nupkg.sha512",
+    "C:\\Users\\Verne\\.nuget\\packages\\scalar.aspnetcore\\2.0.20\\scalar.aspnetcore.2.0.20.nupkg.sha512",
     "C:\\Users\\Verne\\.nuget\\packages\\system.diagnostics.diagnosticsource\\8.0.0\\system.diagnostics.diagnosticsource.8.0.0.nupkg.sha512",
     "C:\\Users\\Verne\\.nuget\\packages\\system.io.pipelines\\9.0.2\\system.io.pipelines.9.0.2.nupkg.sha512",
     "C:\\Users\\Verne\\.nuget\\packages\\system.memory\\4.5.3\\system.memory.4.5.3.nupkg.sha512",

@@ -133,6 +133,42 @@
           "buildMultiTargeting/Aspire.Hosting.AppHost.targets": {}
         }
       },
+      "Aspire.Hosting.NodeJs/9.1.0": {
+        "type": "package",
+        "dependencies": {
+          "AspNetCore.HealthChecks.Uris": "9.0.0",
+          "Aspire.Hosting": "9.1.0",
+          "Google.Protobuf": "3.29.3",
+          "Grpc.AspNetCore": "2.67.0",
+          "Grpc.Net.ClientFactory": "2.67.0",
+          "Grpc.Tools": "2.67.0",
+          "Humanizer.Core": "2.14.1",
+          "JsonPatch.Net": "3.2.3",
+          "KubernetesClient": "15.0.1",
+          "Microsoft.Extensions.Configuration.Abstractions": "8.0.0",
+          "Microsoft.Extensions.Configuration.Binder": "8.0.2",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.2",
+          "Microsoft.Extensions.Diagnostics.HealthChecks": "8.0.12",
+          "Microsoft.Extensions.Hosting": "8.0.1",
+          "Microsoft.Extensions.Hosting.Abstractions": "8.0.1",
+          "Microsoft.Extensions.Http": "8.0.1",
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.3",
+          "Microsoft.Extensions.Options": "8.0.2",
+          "Microsoft.Extensions.Primitives": "8.0.0",
+          "Polly.Core": "8.5.1",
+          "System.IO.Hashing": "9.0.1"
+        },
+        "compile": {
+          "lib/net8.0/Aspire.Hosting.NodeJs.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/Aspire.Hosting.NodeJs.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Aspire.Hosting.Orchestration.win-x64/9.1.0": {
         "type": "package",
         "build": {
@@ -1377,6 +1413,22 @@
         "lib/net8.0/Aspire.Hosting.AppHost.xml",
         "lib/net9.0/Aspire.Hosting.AppHost.dll",
         "lib/net9.0/Aspire.Hosting.AppHost.xml"
+      ]
+    },
+    "Aspire.Hosting.NodeJs/9.1.0": {
+      "sha512": "uiDLW/gIqSSYRgqGFw/dkPgA9yCB8YlHNM29XKQk4vh5VmWW9TlJ3xAXe6VEjf1MQgbJjPSfe7E7FU5lRgWiiw==",
+      "type": "package",
+      "path": "aspire.hosting.nodejs/9.1.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "README.md",
+        "THIRD-PARTY-NOTICES.TXT",
+        "aspire.hosting.nodejs.9.1.0.nupkg.sha512",
+        "aspire.hosting.nodejs.nuspec",
+        "lib/net8.0/Aspire.Hosting.NodeJs.dll",
+        "lib/net8.0/Aspire.Hosting.NodeJs.xml"
       ]
     },
     "Aspire.Hosting.Orchestration.win-x64/9.1.0": {
@@ -2953,6 +3005,7 @@
     "net9.0": [
       "Aspire.Dashboard.Sdk.win-x64 >= 9.1.0",
       "Aspire.Hosting.AppHost >= 9.1.0",
+      "Aspire.Hosting.NodeJs >= 9.1.0",
       "Aspire.Hosting.Orchestration.win-x64 >= 9.1.0"
     ]
   },
@@ -3000,7 +3053,8 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      }
+      },
+      "SdkAnalysisLevel": "9.0.200"
     },
     "frameworks": {
       "net9.0": {
@@ -3012,6 +3066,10 @@
             "autoReferenced": true
           },
           "Aspire.Hosting.AppHost": {
+            "target": "Package",
+            "version": "[9.1.0, )"
+          },
+          "Aspire.Hosting.NodeJs": {
             "target": "Package",
             "version": "[9.1.0, )"
           },

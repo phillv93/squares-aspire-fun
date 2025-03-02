@@ -4,6 +4,21 @@ node_modules/
 # Ignore build output directories
 dist/
 build/
+bin/
+obj/
+
+# Ignore .NET user-specific and temporary files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.sln.cache
+
+# Ignore IDE-specific files (VSCode, JetBrains Rider, Visual Studio)
+.vscode/
+.idea/
+*.iml
+*.vs/
 
 # Ignore environment variable files
 .env
@@ -16,12 +31,10 @@ build/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+*.log
+*.tlog
 
-# Ignore IDE specific files
-.vscode/
-.idea/
-
-# Ignore OS generated files
+# Ignore OS-generated files
 .DS_Store
 Thumbs.db
 
@@ -34,16 +47,15 @@ jspm_packages/
 # Ignore temporary files
 *.tmp
 *.swp
+*.bak
+*.orig
+*.rej
 
 # Ignore lock files
 package-lock.json
 yarn.lock
 
 # Ignore miscellaneous
-*.log
-*.bak
-*.orig
-*.rej
 *.sublime-project
 *.sublime-workspace
 
@@ -62,3 +74,6 @@ yarn.lock
 *.tgz
 *.zip
 *.7z
+
+
+squares.json

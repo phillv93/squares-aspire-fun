@@ -26,9 +26,9 @@ if (app.Environment.IsDevelopment())
 }
 
 // Load saved squares from file on startup
-List<Square> savedSquares = SquareHelper.LoadSquaresFromFile();
+List<Square> savedSquares = await SquareHelper.LoadSquaresFromFile();
 
-app.MapGet("/GetSquare", async () =>
+app.MapPost("/CreateSquare", async () =>
 {
     var (x, y) = SquareHelper.GetNextPosition(savedSquares.LastOrDefault());
     var square = new Square(Guid.NewGuid(),
@@ -41,13 +41,13 @@ app.MapGet("/GetSquare", async () =>
     // Save new square to file
     await SquareHelper.SaveSquaresToFile(savedSquares);
 
-    return Results.Ok(square);
+    return Results.Created($"/squares/{square.Id}",square);
 })
-.Produces<Square>(200)
+.Produces<Square>(201)
 .Produces(500)
-.WithName("GetSquare")
+.WithName("CreateSquare")
 .WithTags("Squares")
-.WithSummary("Fetch a new square")
+.WithSummary("Creates a new square and returns it")
 .WithDescription("""
     Returns a new square with a unique ID, a random Tailwind color, 
     and calculated coordinates based on previous squares.
@@ -68,13 +68,13 @@ app.MapGet("/GetSavedSquares", () =>
     Each square includes an ID, a Tailwind color class, and X/Y coordinates.
 """);
 
-app.MapPost("/ClearSquares", async () =>
+app.MapDelete("/DeleteSquares", async () =>
 {
     try
     {
         savedSquares.Clear();
         await File.WriteAllTextAsync("squares.json", "[]");
-        return Results.Ok();
+        return Results.NoContent();
     }
     catch (Exception ex)
     {
@@ -82,11 +82,11 @@ app.MapPost("/ClearSquares", async () =>
         return Results.Problem("Failed to clear squares.");
     }
 })
-.Produces(200)
+.Produces(204)
 .Produces(500)
-.WithName("ClearSquares")
+.WithName("DeleteSquares")
 .WithTags("Squares")
-.WithSummary("Clear all saved squares")
+.WithSummary("Delete all saved squares")
 .WithDescription("""
     Deletes all squares from the backend storage.
     This action resets the grid and removes all stored square data.
@@ -132,6 +132,10 @@ static class SquareHelper
     {
         WriteIndented = true //Makes JSON more readable
     };
+    private const string FilePath = "squares.json";
+
+    //Locks the file for writing so that we don't have multiple threads writing to it at the same time, which wont happen but this is just for fun
+    private static readonly SemaphoreSlim FileLock = new(1, 1);
 
     public static string GenerateRandomTailwindColor()
     {
@@ -141,33 +145,44 @@ static class SquareHelper
         return $"bg-{color}-{shade}"; // "bg-blue-600", "bg-teal-400"
     }
 
-    public static List<Square> LoadSquaresFromFile()
+    //might be a bit overkill with filestream but hey, maybe we want an A lot of Squares!
+    public static async Task<List<Square>> LoadSquaresFromFile()
     {
-        if (!File.Exists("squares.json"))
+        if (!File.Exists(FilePath))
         {
             return [];
         }
 
         try
         {
-            var squares = JsonSerializer.Deserialize<List<Square>>(File.ReadAllText("squares.json"));
+            using FileStream fs = new(FilePath, FileMode.Open, FileAccess.Read, FileShare.Read);
+            var squares = await JsonSerializer.DeserializeAsync<List<Square>>(fs, JsonOptions);
             return squares ?? [];
         }
-        catch
+        catch(Exception ex)
         {
+            Console.WriteLine($"Error loading squares: {ex.Message}");
             return [];
         }
     }
+
     public static async Task SaveSquaresToFile(List<Square> squares)
     {
+        //closed for business, no one else allowed in
+        await FileLock.WaitAsync(); 
         try
         {
-            string json = System.Text.Json.JsonSerializer.Serialize(squares, JsonOptions);
-            await File.WriteAllTextAsync("squares.json", json);
+            using FileStream fs = new(FilePath, FileMode.Create, FileAccess.Write, FileShare.None);
+            await JsonSerializer.SerializeAsync(fs, squares, JsonOptions);
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Error saving squares: {ex.Message}");
+        }
+        finally
+        {
+            //open for business
+            FileLock.Release();
         }
     }
 }

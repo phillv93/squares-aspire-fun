@@ -3,6 +3,7 @@ import Square from "./models/Square.ts";
 
 function App() {
   const [squares, setSquares] = useState<Square[]>([]);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   useEffect(() => {
     GetSavedSquares();
@@ -30,7 +31,7 @@ function App() {
 
   const getSquare = async () => {
     try {
-      const response = await fetch("/api/GetSquare");
+      const response = await fetch("/api/CreateSquare", { method: "POST" });
   
       if (!response.ok) throw new Error("Failed to fetch square");
   
@@ -40,20 +41,29 @@ function App() {
       const newSquare = { ...data};
   
       setSquares((prevSquares) => [...prevSquares, newSquare]);
-  
+      setErrorMessage(null);
     } catch (error) {
       console.error("Error fetching square:", error);
+      setErrorMessage("Something went wrong with your square, please try again.");
     }
   };
 
-  // Clear squares state and reset storage
+  // Clear squares state
   const clearState = async () => {
     try {
-      await fetch("/api/ClearSquares", { method: "POST" });
+      const response = await fetch("/api/DeleteSquares", { method: "Delete" });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(errorText || "Failed to clear squares.");
+      }
+      
       console.log("Cleared state");
       setSquares([]);
+      setErrorMessage(null);
     } catch (error) {
       console.error("Error clearing state:", error);
+      setErrorMessage("Failed to clear your squares. Try again.");
     }
   };
 
@@ -75,7 +85,8 @@ function App() {
           Clear State
         </button>
       </div>
-
+      {errorMessage && <p className="text-red-500 mt-2">{errorMessage}</p>}
+      
       <div
         className="mt-4 grid gap-1 bg-gray-100"
         style={{
@@ -91,7 +102,7 @@ function App() {
               gridColumn: square.x + 1, 
               gridRow: square.y + 1, 
             }}
-            className={`border border-gray-300 ${square.color}`}
+            className={`border border-gray-300 ${square.color} `}
           ></div>
         ))}
       </div>
